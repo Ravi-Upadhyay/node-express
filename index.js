@@ -1,24 +1,21 @@
-/* Chapter 1 - Starting with express */
+/* Chapter-2: Serve files using express */
 const express = require('express');
+const path = require('path');
 
+// A top level function to provide express application
 const app = express();
 
-/* 1.1. Based on route send user something */
+// This is the convention of using middleware and popular while using express
+app.use('/public', express.static(path.join(__dirname, 'src')));
+
 app.get('/', (req, res) => {
-  res.send('Voila! NodeJS and Express are up and running');
+  res.sendFile(path.join(__dirname, 'src', 'index.html'));
 });
 
-/* 1.2. Working with parameters */
-app.get('/welcome/:name/:color', (req, res) => {
-  console.log(req.params);
-  res.send(`Welcome ${req.params.name}! We are glad to know that your favorite color is ${req.params.color}.`);
-});
-
-/* 1.3. Working with qurey Strings */
-//  URL to  be called: http://localhost:8080/about?lang=en&contactMode=telephone
 app.get('/about', (req, res) => {
-  console.log(req.query);
-  res.send(`Welcome! We have got your preference ${JSON.stringify(req.query)}.`);
+  res.sendFile(path.join(__dirname, 'src', 'about.html'));
 });
 
-app.listen(8080);
+app.listen(3000, () => {
+  console.log('Node-Express server up and running at port 3000')
+});
