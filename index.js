@@ -1,21 +1,22 @@
-/* Chapter-2: Serve files using express */
+/* Chapter 3 - Working with post requests */
 const express = require('express');
 const path = require('path');
-
-// A top level function to provide express application
+const bodyParser = require('body-parser');
 const app = express();
 
-// This is the convention of using middleware and popular while using express
+// body-parser module is external package, not included into node js
 app.use('/public', express.static(path.join(__dirname, 'src')));
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'src', 'index.html'));
 });
 
-app.get('/about', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'about.html'));
+app.post('/', (req, res) => {
+  console.log(req.body);
+  res.send('request-submited successfully');
 });
 
 app.listen(3000, () => {
-  console.log('Node-Express server up and running at port 3000')
+  console.log('Server up and running, Listening to port: 3000');
 });
