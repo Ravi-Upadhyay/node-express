@@ -7,6 +7,7 @@ const app = express();
 // body-parser module is external package, not included into node js
 app.use('/public', express.static(path.join(__dirname, 'src')));
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'src', 'index.html'));
@@ -14,7 +15,7 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
   console.log(req.body);
-  res.send('request-submited successfully');
+  res.json({ status: 200, statusText: 'submitted' });
 });
 
 app.listen(3000, () => {
