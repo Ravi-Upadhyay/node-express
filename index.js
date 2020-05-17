@@ -1,26 +1,33 @@
-/* Chapter 5 - Dynamic Templating */
+/* Chapter 6 - Working with Middleware */
 const express = require('express');
-const path = require('path');
 const bodyParser = require('body-parser');
-const Joi = require('joi');
-
 const app = express();
 
-// body-parser module is external package, not included into node js
-app.use('/public', express.static(path.join(__dirname, 'src')));
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-// view engine must be set
-app.set('view engine', 'ejs');
+// Example-1: Middleware in action
+app.use((req, res, next) => {
+  console.log('inside middleware function: ');
+  console.log(req.method);
+  next();
+});
 
-// Use render() method instead
+// Example-2: Middleware only for particular route
+// Example-3: Setting up data in the middleware
+app.use('/area-51', (req, res, next) => {
+  console.log('inside middleware function: ');
+  console.log(req.method);
+  req.access = false;
+  next();
+});
+
 app.get('/', (req, res) => {
-  res.render('index', {data: {
-    loggedIn: true,
-    userName: 'R P Sharma',
-    products: ['Personal Loan', 'Life Insurance', 'Vehicle Insurance'],
-  }});
+  res.send('Thank you for reaching us');
+});
+
+app.get('/area-51', (req, res) => {
+  console.log(req.access);
+  res.send('You do not have the access');
 });
 
 app.listen(3000, () => {
