@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+<h1>Home Page</h1>
+<p>You are welcome! you are at home page</p>\
+
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col col-lg-6">
+      <% if(data.loggedIn) { %>
+       <h2> You are logged in as: <%= data.userName %> </h2> 
+      <% } %>
+    </div>
+    <div class="col col-lg-6">
+      <% if(data.products.length) { %>
+       <% data.products.forEach((product) => { %>
+        <li> <%= product %> </li>
+       <% }) %> 
+      <% } %>
+    </div>
+  </div>
+</div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</html>
